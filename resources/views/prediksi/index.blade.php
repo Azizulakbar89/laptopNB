@@ -103,39 +103,20 @@
             <table class="w-full">
                 <thead>
                     <tr class="bg-gradient-to-r from-blue-600/40 to-purple-600/40 border-b border-white/20">
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">No</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">ID Uji</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Kelas Aktual
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">No</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">ID Uji</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">Hasil Prediksi
                         </th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Hasil Prediksi
-                        </th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Aksi</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-white/10">
                     @forelse($dataUji as $index => $item)
                         <tr class="hover:bg-white/10 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-white">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-white text-center">
                                 {{ $dataUji->firstItem() + $index }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-white">{{ $item->id_uji }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @if ($item->kelas)
-                                    <span
-                                        class="px-3 py-1.5 text-xs font-bold rounded-full border-2 text-white
-                                @if ($item->kelas == 'K1') bg-blue-500/50 border-blue-300
-                                @elseif($item->kelas == 'K2') bg-green-500/50 border-green-300
-                                @elseif($item->kelas == 'K3') bg-yellow-500/50 border-yellow-300
-                                @elseif($item->kelas == 'K4') bg-purple-500/50 border-purple-300
-                                @elseif($item->kelas == 'K5') bg-red-500/50 border-red-300
-                                @else bg-gray-500/50 border-gray-300 @endif">
-                                        {{ $item->kelas }}
-                                    </span>
-                                @else
-                                    <span class="text-gray-400 text-xs">-</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-white text-center">{{ $item->id_uji }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
                                 @if ($item->hasil_prediksi)
                                     <span
                                         class="px-3 py-1.5 text-xs font-bold rounded-full border-2 text-white
@@ -151,32 +132,7 @@
                                     <span class="text-gray-400 text-xs">-</span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @if ($item->kelas && $item->hasil_prediksi)
-                                    @if ($item->kelas == $item->hasil_prediksi)
-                                        <span
-                                            class="px-2 py-1 bg-white text-green-100 text-xs rounded-full border border-green-400">
-                                            Sesuai
-                                        </span>
-                                    @else
-                                        <span
-                                            class="px-2 py-1 bg-white text-red-100 text-xs rounded-full border border-red-400">
-                                            Tidak Sesuai
-                                        </span>
-                                    @endif
-                                @elseif($item->hasil_prediksi && !$item->kelas)
-                                    <span
-                                        class="px-2 py-1 bg-white text-yellow-100 text-xs rounded-full border border-yellow-400">
-                                        Kelas Tidak Diketahui
-                                    </span>
-                                @else
-                                    <span
-                                        class="px-2 py-1 bg-gray-500/30 text-gray-100 text-xs rounded-full border border-gray-400">
-                                        -
-                                    </span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <a href="{{ route('prediksi.perhitungan', $item->id_uji) }}"
                                     class="inline-flex items-center gap-1 text-white hover:text-white transition-colors p-1.5 hover:bg-white/20 rounded-lg bg-white/10 border border-white/20"
                                     title="Detail Perhitungan">
@@ -190,7 +146,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-12 text-center">
+                            <td colspan="4" class="px-6 py-12 text-center">
                                 <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
                                     <svg class="w-20 h-20 text-white/40 mx-auto mb-4" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">

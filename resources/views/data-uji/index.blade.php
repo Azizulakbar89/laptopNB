@@ -61,86 +61,68 @@
             <table class="w-full">
                 <thead>
                     <tr class="bg-gradient-to-r from-blue-600/40 to-purple-600/40 border-b border-white/20">
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">No</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">X1</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">X2</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">X3</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">X4</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">X5</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">X6</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">X7</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">X8</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">X9</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">X10</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Kelas Aktual
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">No</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">X1</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">X2</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">X3</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">X4</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">X5</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">X6</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">X7</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">X8</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">X9</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">X10</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">Hasil Prediksi
                         </th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Hasil Prediksi
-                        </th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Aksi</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-white/10">
                     @forelse($dataUji as $index => $data)
                         <tr class="hover:bg-white/10 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-white">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-white text-center">
                                 {{ $dataUji->firstItem() + $index }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <span
                                     class="px-2.5 py-1.5 bg-white/20 rounded-lg text-xs font-bold text-white border border-white/30">{{ $data->layar_blank }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <span
                                     class="px-2.5 py-1.5 bg-white/20 rounded-lg text-xs font-bold text-white border border-white/30">{{ $data->layar_bergaris }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <span
                                     class="px-2.5 py-1.5 bg-white/20 rounded-lg text-xs font-bold text-white border border-white/30">{{ $data->auto_restart }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <span
                                     class="px-2.5 py-1.5 bg-white/20 rounded-lg text-xs font-bold text-white border border-white/30">{{ $data->boot_loop }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <span
                                     class="px-2.5 py-1.5 bg-white/20 rounded-lg text-xs font-bold text-white border border-white/30">{{ $data->alarm_bios }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <span
                                     class="px-2.5 py-1.5 bg-white/20 rounded-lg text-xs font-bold text-white border border-white/30">{{ $data->error_disk }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <span
                                     class="px-2.5 py-1.5 bg-white/20 rounded-lg text-xs font-bold text-white border border-white/30">{{ $data->keyboard_touchpad_mati }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <span
                                     class="px-2.5 py-1.5 bg-white/20 rounded-lg text-xs font-bold text-white border border-white/30">{{ $data->baterai_cepat_habis }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <span
                                     class="px-2.5 py-1.5 bg-white/20 rounded-lg text-xs font-bold text-white border border-white/30">{{ $data->overheat }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <span
                                     class="px-2.5 py-1.5 bg-white/20 rounded-lg text-xs font-bold text-white border border-white/30">{{ $data->hang }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @if ($data->kelas)
-                                    <span
-                                        class="px-3 py-1.5 text-xs font-bold rounded-full border-2 text-white
-                                        @if ($data->kelas == 'K1') bg-blue-500/50 border-blue-300
-                                        @elseif($data->kelas == 'K2') bg-green-500/50 border-green-300
-                                        @elseif($data->kelas == 'K3') bg-yellow-500/50 border-yellow-300
-                                        @elseif($data->kelas == 'K4') bg-purple-500/50 border-purple-300
-                                        @elseif($data->kelas == 'K5') bg-red-500/50 border-red-300
-                                        @else bg-gray-500/50 border-gray-300 @endif">
-                                        {{ $data->kelas }}
-                                    </span>
-                                @else
-                                    <span class="text-gray-400 text-xs">-</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
                                 @if ($data->hasil_prediksi)
                                     <span
                                         class="px-3 py-1.5 text-xs font-bold rounded-full border-2 text-white
@@ -156,8 +138,8 @@
                                     <span class="text-gray-400 text-xs">-</span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                <div class="flex items-center gap-2">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                <div class="flex items-center justify-center gap-2">
                                     <a href="{{ route('prediksi.satu', $data->id_uji) }}"
                                         class="text-white hover:text-white transition-colors p-1.5 hover:bg-white/20 rounded-lg bg-white/10 border border-white/20"
                                         title="Prediksi">
@@ -206,7 +188,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="15" class="px-6 py-12 text-center">
+                            <td colspan="13" class="px-6 py-12 text-center">
                                 <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
                                     <svg class="w-20 h-20 text-white/40 mx-auto mb-4" fill="none"
                                         stroke="currentColor" viewBox="0 0 24 24">
