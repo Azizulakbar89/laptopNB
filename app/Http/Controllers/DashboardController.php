@@ -9,13 +9,21 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    protected $naiveBayesService;
+
+    public function __construct(\App\Services\NaiveBayesService $naiveBayesService)
+    {
+        $this->naiveBayesService = $naiveBayesService;
+    }
+
     public function index()
     {
         $totalDataLatih = DataLatih::count();
         $totalDataUji = DataUji::count();
-        $totalPrediksi = HasilPrediksi::count();
+        $totalPrediksi = HasilPrediksi::where('id_prediksi', '!=', 'METRIK')->count();
 
-        $latestPrediksi = HasilPrediksi::with('dataUji')
+        $latestPrediksi = HasilPrediksi::where('id_prediksi', '!=', 'METRIK')
+            ->with('dataUji')
             ->latest()
             ->take(5)
             ->get();
@@ -24,12 +32,15 @@ class DashboardController extends Controller
             ->groupBy('kelas')
             ->get();
 
+        $metrik = $this->naiveBayesService->getMetrikEvaluasi();
+
         return view('dashboard', compact(
             'totalDataLatih',
             'totalDataUji',
             'totalPrediksi',
             'latestPrediksi',
-            'statistikKelas'
+            'statistikKelas',
+            'metrik'
         ));
     }
 }

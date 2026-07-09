@@ -153,6 +153,15 @@ class NaiveBayesService
 
         $total = $dataUji->count();
         if ($total == 0) {
+            HasilPrediksi::updateOrCreate(
+                ['id_prediksi' => 'METRIK'],
+                [
+                    'akurasi' => 0,
+                    'presisi' => 0,
+                    'recall' => 0,
+                    'f1_score' => 0
+                ]
+            );
             return [
                 'akurasi' => 0,
                 'presisi' => 0,
@@ -354,7 +363,10 @@ class NaiveBayesService
      */
     public function generateId($prefix, $table, $column, $length = 10)
     {
-        $lastRecord = DB::table($table)->orderBy($column, 'desc')->first();
+        $lastRecord = DB::table($table)
+            ->where($column, 'like', $prefix . '%')
+            ->orderBy($column, 'desc')
+            ->first();
 
         if ($lastRecord) {
             $lastId = substr($lastRecord->$column, strlen($prefix));

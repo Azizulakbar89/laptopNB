@@ -38,6 +38,15 @@ class PrediksiController extends Controller
                 'hasil_prediksi' => $prediksi['kelas']
             ]);
 
+            $existing = HasilPrediksi::where('data_uji_id', $dataUji->id_uji)->first();
+            if (!$existing) {
+                $idPrediksi = $this->naiveBayesService->generateId('PR', 'hasil_prediksi', 'id_prediksi', 10);
+                HasilPrediksi::create([
+                    'id_prediksi' => $idPrediksi,
+                    'data_uji_id' => $dataUji->id_uji,
+                ]);
+            }
+
             $this->naiveBayesService->hitungMetrikEvaluasi();
 
             DB::commit();
@@ -70,6 +79,15 @@ class PrediksiController extends Controller
                 $uji->update([
                     'hasil_prediksi' => $prediksi['kelas']
                 ]);
+
+                $existing = HasilPrediksi::where('data_uji_id', $uji->id_uji)->first();
+                if (!$existing) {
+                    $idPrediksi = $this->naiveBayesService->generateId('PR', 'hasil_prediksi', 'id_prediksi', 10);
+                    HasilPrediksi::create([
+                        'id_prediksi' => $idPrediksi,
+                        'data_uji_id' => $uji->id_uji,
+                    ]);
+                }
 
                 $hasil[] = $prediksi['kelas'];
             }

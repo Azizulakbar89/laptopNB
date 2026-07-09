@@ -1051,11 +1051,7 @@
                                 class="text-xs font-semibold text-yellow-400 bg-yellow-400/10 px-3 py-1 rounded-full">Akurasi</span>
                         </div>
                         <div class="text-4xl font-bold text-white mb-1">
-                            @if (($totalPrediksi ?? 0) > 0 && isset($latestPrediksi) && $latestPrediksi->isNotEmpty())
-                                {{ number_format($latestPrediksi->first()->akurasi * 100 ?? 0, 2) }}%
-                            @else
-                                0%
-                            @endif
+                            {{ number_format(($metrik['akurasi'] ?? 0) * 100, 2) }}%
                         </div>
                         <div class="text-sm text-white">Akurasi Terakhir</div>
                         <div class="mt-3 flex items-center gap-2 text-xs text-white">

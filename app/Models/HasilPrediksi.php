@@ -27,4 +27,14 @@ class HasilPrediksi extends Model
     {
         return $this->belongsTo(DataUji::class, 'data_uji_id', 'id_uji');
     }
+
+    public function getHasilPrediksiAttribute()
+    {
+        return $this->dataUji ? $this->dataUji->hasil_prediksi : null;
+    }
+
+    public function getKelasAktualAttribute()
+    {
+        return $this->dataUji ? $this->dataUji->kelas : null;
+    }
 }

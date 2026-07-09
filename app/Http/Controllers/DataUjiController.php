@@ -91,7 +91,10 @@ class DataUjiController extends Controller
     public function destroy($id)
     {
         $dataUji = DataUji::findOrFail($id);
+        $dataUji->hasilPrediksi()->delete();
         $dataUji->delete();
+
+        $this->naiveBayesService->hitungMetrikEvaluasi();
 
         return redirect()->route('data-uji.index')
             ->with('success', 'Data uji berhasil dihapus');
@@ -349,6 +352,7 @@ class DataUjiController extends Controller
     {
         try {
             DB::statement('SET FOREIGN_KEY_CHECKS=0');
+            \App\Models\HasilPrediksi::truncate();
             DataUji::truncate();
             DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
@@ -401,6 +405,15 @@ class DataUjiController extends Controller
                 $data->update([
                     'hasil_prediksi' => $prediksi['kelas']
                 ]);
+
+                $existing = HasilPrediksi::where('data_uji_id', $data->id_uji)->first();
+                if (!$existing) {
+                    $idPrediksi = $this->naiveBayesService->generateId('PR', 'hasil_prediksi', 'id_prediksi', 10);
+                    HasilPrediksi::create([
+                        'id_prediksi' => $idPrediksi,
+                        'data_uji_id' => $data->id_uji,
+                    ]);
+                }
 
                 $berhasil++;
                 $hasil[] = $data->id_uji . ' (' . $prediksi['kelas'] . ')';
