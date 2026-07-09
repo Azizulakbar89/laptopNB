@@ -32,6 +32,32 @@ class DashboardController extends Controller
             ->groupBy('kelas')
             ->get();
 
+        // Get counts for actual labels in data_uji (Test Data)
+        $aktualUji = DataUji::select('kelas', \DB::raw('count(*) as total'))
+            ->whereNotNull('kelas')
+            ->groupBy('kelas')
+            ->pluck('total', 'kelas')
+            ->toArray();
+
+        // Get counts for predicted labels in data_uji (Test Data)
+        $prediksiUji = DataUji::select('hasil_prediksi', \DB::raw('count(*) as total'))
+            ->whereNotNull('hasil_prediksi')
+            ->groupBy('hasil_prediksi')
+            ->pluck('total', 'hasil_prediksi')
+            ->toArray();
+
+        $chartData = [
+            'labels' => ['K1', 'K2', 'K3', 'K4', 'K5'],
+            'nama_labels' => ['RAM/Memori', 'Hard Disk/SSD', 'LCD/Layar', 'Sistem Operasi', 'Overheating/Thermal'],
+            'aktual' => [],
+            'prediksi' => []
+        ];
+
+        foreach (['K1', 'K2', 'K3', 'K4', 'K5'] as $k) {
+            $chartData['aktual'][] = $aktualUji[$k] ?? 0;
+            $chartData['prediksi'][] = $prediksiUji[$k] ?? 0;
+        }
+
         $metrik = $this->naiveBayesService->getMetrikEvaluasi();
 
         return view('dashboard', compact(
@@ -40,7 +66,8 @@ class DashboardController extends Controller
             'totalPrediksi',
             'latestPrediksi',
             'statistikKelas',
-            'metrik'
+            'metrik',
+            'chartData'
         ));
     }
 }

@@ -15,6 +15,8 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         * {
@@ -1061,6 +1063,22 @@
                     </div>
                 </div>
 
+                <!-- Grafik Pembanding -->
+                <div class="mb-8 fade-in" style="animation-delay: 0.45s">
+                    <div class="glass-card rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-white">Perbandingan Data Aktual vs Data Prediksi</h3>
+                                <p class="text-gray-400 text-xs mt-1">Grafik visual pembanding distribusi kelas pada data uji</p>
+                            </div>
+                            <span class="text-xs font-semibold text-teal-400 bg-teal-400/10 px-3 py-1 rounded-full">Visualisasi</span>
+                        </div>
+                        <div class="relative w-full" style="height: 350px;">
+                            <canvas id="comparisonChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Statistik Kelas dan Prediksi Terbaru -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     <!-- Statistik Kelas -->
@@ -1236,6 +1254,94 @@
     <script>
         // Mobile menu toggle functionality
         document.addEventListener('DOMContentLoaded', function() {
+            // Chart.js Comparison Chart
+            const comparisonCanvas = document.getElementById('comparisonChart');
+            if (comparisonCanvas) {
+                const ctx = comparisonCanvas.getContext('2d');
+                const chartData = @json($chartData);
+                
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: chartData.nama_labels,
+                        datasets: [
+                            {
+                                label: 'Data Aktual (Label Sebenarnya)',
+                                data: chartData.aktual,
+                                backgroundColor: 'rgba(59, 130, 246, 0.65)',
+                                borderColor: '#3b82f6',
+                                borderWidth: 2,
+                                borderRadius: 6,
+                                borderSkipped: false,
+                            },
+                            {
+                                label: 'Data Prediksi',
+                                data: chartData.prediksi,
+                                backgroundColor: 'rgba(168, 85, 247, 0.65)',
+                                borderColor: '#a855f7',
+                                borderWidth: 2,
+                                borderRadius: 6,
+                                borderSkipped: false,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    color: '#e2e8f0',
+                                    font: {
+                                        family: 'Outfit',
+                                        size: 12,
+                                        weight: 'bold'
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleColor: '#fff',
+                                bodyColor: '#e2e8f0',
+                                titleFont: { family: 'Outfit', weight: 'bold' },
+                                bodyFont: { family: 'Outfit' },
+                                padding: 12,
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: '#94a3b8',
+                                    font: {
+                                        family: 'Outfit',
+                                        size: 11
+                                    }
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.05)'
+                                },
+                                ticks: {
+                                    color: '#94a3b8',
+                                    font: {
+                                        family: 'Outfit',
+                                        size: 11
+                                    },
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
             const menuToggle = document.getElementById('menu-toggle');

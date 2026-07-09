@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('hasil_prediksi', function (Blueprint $table) {
             $table->string('id_prediksi', 10)->primary();
-            $table->string('data_uji_id', 10);
+            $table->string('data_uji_id', 10)->nullable();
             $table->float('akurasi')->nullable();
             $table->float('presisi')->nullable();
             $table->float('recall')->nullable();

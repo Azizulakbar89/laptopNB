@@ -45,7 +45,7 @@ class DataUjiController extends Controller
             'baterai_cepat_habis' => 'required|in:1,2',
             'overheat' => 'required|in:1,2',
             'hang' => 'required|in:1,2',
-            'kelas' => 'nullable|in:K1,K2,K3,K4,K5'
+            'kelas' => 'required|in:K1,K2,K3,K4,K5'
         ]);
 
         $id = $this->naiveBayesService->generateId('UJ', 'data_uji', 'id_uji', 10);
@@ -78,7 +78,7 @@ class DataUjiController extends Controller
             'baterai_cepat_habis' => 'required|in:1,2',
             'overheat' => 'required|in:1,2',
             'hang' => 'required|in:1,2',
-            'kelas' => 'nullable|in:K1,K2,K3,K4,K5'
+            'kelas' => 'required|in:K1,K2,K3,K4,K5'
         ]);
 
         $dataUji = DataUji::findOrFail($id);
@@ -160,8 +160,8 @@ class DataUjiController extends Controller
                     $hang = $convertValue($row[10] ?? '');
 
                     $kelas = strtoupper(trim($row[11] ?? ''));
-                    if (!in_array($kelas, ['K1', 'K2', 'K3', 'K4', 'K5'])) {
-                        $kelas = null;
+                    if (empty($kelas) || !in_array($kelas, ['K1', 'K2', 'K3', 'K4', 'K5'])) {
+                        throw new \Exception("Baris " . ($index + 2) . ": Kolom kelas (aktual) wajib diisi (K1-K5)");
                     }
 
                     if (!in_array($layar_blank, ['1', '2'])) $layar_blank = '1';
@@ -238,7 +238,7 @@ class DataUjiController extends Controller
                 'X8 (Baterai Cepat Habis)',
                 'X9 (Overheat)',
                 'X10 (Hang)',
-                'Kelas (Opsional)'
+                'Kelas (Wajib)'
             ];
 
             foreach ($headers as $col => $header) {
@@ -296,7 +296,7 @@ class DataUjiController extends Controller
                     '1',
                     '2',
                     '1',
-                    ''
+                    'K2'
                 ]
             ];
 
@@ -324,9 +324,9 @@ class DataUjiController extends Controller
             $infoRow++;
             $sheet->setCellValue('A' . $infoRow, '   - 2 = Ya, mengalami gejala');
             $infoRow++;
-            $sheet->setCellValue('A' . $infoRow, '2. Kolom Kelas (opsional): K1, K2, K3, K4, atau K5');
+            $sheet->setCellValue('A' . $infoRow, '2. Kolom Kelas (Wajib): K1, K2, K3, K4, atau K5');
             $infoRow++;
-            $sheet->setCellValue('A' . $infoRow, '   - Jika dikosongi, akan diisi otomatis saat prediksi');
+            $sheet->setCellValue('A' . $infoRow, '   - Menentukan label aktual dari data uji');
             $infoRow += 2;
             $sheet->setCellValue('A' . $infoRow, 'CATATAN: Gunakan angka 1 atau 2 untuk gejala!');
 
@@ -351,10 +351,21 @@ class DataUjiController extends Controller
     public function truncate()
     {
         try {
-            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+            $driver = DB::connection()->getDriverName();
+            if ($driver === 'sqlite') {
+                DB::statement('PRAGMA foreign_keys = OFF');
+            } else {
+                DB::statement('SET FOREIGN_KEY_CHECKS=0');
+            }
+
             \App\Models\HasilPrediksi::truncate();
             DataUji::truncate();
-            DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+            if ($driver === 'sqlite') {
+                DB::statement('PRAGMA foreign_keys = ON');
+            } else {
+                DB::statement('SET FOREIGN_KEY_CHECKS=1');
+            }
 
             return redirect()->route('data-uji.index')
                 ->with('success', 'Semua data uji berhasil dihapus');

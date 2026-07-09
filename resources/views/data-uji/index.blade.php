@@ -3,6 +3,15 @@
 @section('title', 'Data Uji')
 
 @section('content')
+    @php
+        $namaKelasMap = [
+            'K1' => 'Kerusakan RAM/Memori',
+            'K2' => 'Kerusakan Hard Disk/SSD',
+            'K3' => 'Kerusakan LCD/Layar',
+            'K4' => 'Kerusakan Sistem Operasi',
+            'K5' => 'Kerusakan akibat Overheating/Thermal',
+        ];
+    @endphp
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
             <h1 class="text-2xl font-bold text-white">Data Uji</h1>
@@ -72,6 +81,7 @@
                         <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">X8</th>
                         <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">X9</th>
                         <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">X10</th>
+                        <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">Label Aktual</th>
                         <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">Hasil Prediksi
                         </th>
                         <th class="px-6 py-4 text-center text-xs font-bold text-white uppercase tracking-wider">Aksi</th>
@@ -121,6 +131,23 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                 <span
                                     class="px-2.5 py-1.5 bg-white/20 rounded-lg text-xs font-bold text-white border border-white/30">{{ $data->hang }}</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                @if ($data->kelas)
+                                    <span
+                                        class="px-3 py-1.5 text-xs font-bold rounded-full border-2 text-white
+                                        @if ($data->kelas == 'K1') bg-blue-500/50 border-blue-300
+                                        @elseif($data->kelas == 'K2') bg-green-500/50 border-green-300
+                                        @elseif($data->kelas == 'K3') bg-yellow-500/50 border-yellow-300
+                                        @elseif($data->kelas == 'K4') bg-purple-500/50 border-purple-300
+                                        @elseif($data->kelas == 'K5') bg-red-500/50 border-red-300
+                                        @else bg-gray-500/50 border-gray-300 @endif"
+                                        title="{{ $namaKelasMap[$data->kelas] ?? $data->kelas }}">
+                                        {{ $data->kelas }}
+                                    </span>
+                                @else
+                                    <span class="text-gray-400 text-xs">-</span>
+                                @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-center">
                                 @if ($data->hasil_prediksi)
@@ -188,7 +215,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="13" class="px-6 py-12 text-center">
+                            <td colspan="14" class="px-6 py-12 text-center">
                                 <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
                                     <svg class="w-20 h-20 text-white/40 mx-auto mb-4" fill="none"
                                         stroke="currentColor" viewBox="0 0 24 24">
@@ -386,23 +413,16 @@
                             </div>
 
                             <div class="mt-5">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Kelas Aktual (Opsional)</label>
-                                <select name="kelas" id="kelas"
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Kelas / Label Aktual</label>
+                                <select name="kelas" id="kelas" required
                                     class="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all shadow-sm">
-                                    <option value="" class="bg-white text-gray-900">- Tidak Ada / Belum Diketahui -
-                                    </option>
-                                    <option value="K1" class="bg-white text-gray-900">K1 - Kerusakan RAM/Memori
-                                    </option>
-                                    <option value="K2" class="bg-white text-gray-900">K2 - Kerusakan Hard Disk/SSD
-                                    </option>
-                                    <option value="K3" class="bg-white text-gray-900">K3 - Kerusakan LCD/Layar
-                                    </option>
-                                    <option value="K4" class="bg-white text-gray-900">K4 - Kerusakan Sistem Operasi
-                                    </option>
-                                    <option value="K5" class="bg-white text-gray-900">K5 - Kerusakan akibat
-                                        Overheating</option>
+                                    <option value="" disabled selected class="bg-white text-gray-900">Pilih Kelas / Label Aktual</option>
+                                    <option value="K1" class="bg-white text-gray-900">K1 - Kerusakan RAM/Memori</option>
+                                    <option value="K2" class="bg-white text-gray-900">K2 - Kerusakan Hard Disk/SSD</option>
+                                    <option value="K3" class="bg-white text-gray-900">K3 - Kerusakan LCD/Layar</option>
+                                    <option value="K4" class="bg-white text-gray-900">K4 - Kerusakan Sistem Operasi</option>
+                                    <option value="K5" class="bg-white text-gray-900">K5 - Kerusakan akibat Overheating</option>
                                 </select>
-                                <p class="text-xs text-gray-500 mt-1">Kelas aktual bisa dikosongi jika belum diketahui</p>
                             </div>
 
                             <!-- Modal Footer -->
